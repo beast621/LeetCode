@@ -51,6 +51,7 @@ int main()
 {
 
 	test64();
+
 	system("pause");
 	return 0;
 }
