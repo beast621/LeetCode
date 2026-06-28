@@ -80,8 +80,38 @@ void print(vector<int>v)
 {
 	for (auto x : v)
 		cout << x << "  ";
+	cout << endl;
 	}
 
+int test120(vector<vector<int>>& v)
+{
+	int h = v.size();
+
+	vector<vector<int>> dp(h);
+	for (int i = 0; i < h; ++i) {
+		dp[i].resize(i + 1);
+	}
+	dp[0][0] = v[0][0];
+	for (int i = 1;i < h;i++)
+	{
+		dp[i][0] = dp[i - 1][0] + v[i][0];
+		dp[i][i] = dp[i - 1][i - 1] + v[i][i];
+	}
+	for (int i = 2;i < h;i++)
+	{
+		for (int j = 1;j < i;j++)
+		{
+			dp[i][j] = min(dp[i - 1][j], dp[i - 1][j - 1]) + v[i][j];
+
+		}
+	}
+	int rmin = dp[h - 1][0];
+	for (int i = 1;i < h;i++)
+	{
+		rmin = dp[h - 1][i] < rmin ? dp[h - 1][i] : rmin;
+	}
+	return rmin;
+}
 
 int main()
 {
@@ -90,6 +120,9 @@ int main()
 	vector<int>v = { 47,46,49,46,56,5,3,8,5,1,564,66};
 	QuickSort(v);
 	print(v);
+	vector<vector<int>>v1 = { {2},{3,4},{6,5,7},{4,1,8,3} };
+	int d = test120(v1);
+	cout << d << endl;
 	system("pause");
 	return 0;
 }
