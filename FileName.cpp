@@ -113,16 +113,83 @@ int test120(vector<vector<int>>& v)
 	return rmin;
 }
 
+struct Node
+{
+	int data;
+	Node* left;
+	Node* right;
+};
+int k = 0;
+Node* createtree(Node* T,vector<int>&v)
+{
+	
+	if (k < v.size() && v[k] != -1)
+	{
+		T = new Node();
+		T->data = v[k];
+	}
+	k++;
+	
+		
+	if (T == nullptr) return nullptr;
+	T->left = createtree(T->left, v);
+	
+	T->right = createtree(T->right, v);
+	
+
+	return T;
+
+}
+
+void print(Node*T)
+{
+	if (T == NULL)return;
+	print(T->left);
+	cout << T->data << "   ";
+	print(T->right);
+
+}
+int sum = 0;
+
+void math(Node*T,int num)
+{
+	if (T->left == NULL && T->right == NULL)
+	{
+		num += T->data;
+		sum += num;
+		return;
+	}
+	num += T->data;
+	num *= 10;
+	math(T->left, num);
+	math(T->right, num);
+
+
+}
 int main()
 {
 
-	test64();
-	vector<int>v = { 47,46,49,46,56,5,3,8,5,1,564,66};
-	QuickSort(v);
-	print(v);
-	vector<vector<int>>v1 = { {2},{3,4},{6,5,7},{4,1,8,3} };
-	int d = test120(v1);
-	cout << d << endl;
+	//test64();
+	//vector<int>v = { 47,46,49,46,56,5,3,8,5,1,564,66};
+	//QuickSort(v);
+	//print(v);
+	//vector<vector<int>>v1 = { {2},{3,4},{6,5,7},{4,1,8,3} };
+	//int d = test120(v1);
+	//cout << d << endl;
+
+	vector<int>v2 = { 4,9,5,-1,-1,1,-1,-1,0,-1,-1 };
+
+
+	Node* root{};
+	root = createtree(root,v2);
+	print(root);
+	int num = 0;
+	math(root,num);
+	cout << sum << endl;
 	system("pause");
+
+
+
+
 	return 0;
 }
